@@ -1,0 +1,13 @@
+numpy
+pyproj
+pandas
+scipy
+geopandas
+scikit-learn
+atd2025
+torch
+pyarrow
+tqdm
+optuna
+matplotlib
+tqdm
