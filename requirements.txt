@@ -1,13 +1,23 @@
+# Core Scientific Computing
 numpy
-pyproj
 pandas
 scipy
+
+# Geospatial Processing
+pyproj
 geopandas
+
+# Machine Learning
 scikit-learn
-atd2025
 torch
+optuna
+
+# Data Processing
 pyarrow
 tqdm
-optuna
+
+# Visualization
 matplotlib
-tqdm
+
+# Competition Framework
+atd2025
