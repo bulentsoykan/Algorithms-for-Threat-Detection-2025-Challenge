@@ -1,0 +1,14 @@
+# Ignore these:
+.hypothesis
+*.egg-info/
+build/
+dist/
+**/.ipynb_checkpoints/
+**/__pycache__/
+*.tar
+*.tar.gz
+*.zip
+*.csv
+*.pyc
+*.html
+

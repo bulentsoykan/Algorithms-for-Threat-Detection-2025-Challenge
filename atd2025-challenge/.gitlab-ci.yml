@@ -1,0 +1,75 @@
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  GIT_CLEAN_FLAGS: "-ffdx -e .cache/pip"
+  PYTHON_IMAGE: python:3.10-buster
+
+cache:
+  paths:
+    - .cache/pip
+
+stages:
+- build
+- test
+- deploy
+
+build-wheel:
+  image: $PYTHON_IMAGE
+  stage: build
+  before_script:
+    - pip install build
+  script:
+    - python -m build
+  artifacts:
+    paths:
+      - dist
+
+build-pages:
+  image: $PYTHON_IMAGE
+  stage: build
+  before_script:
+    - pip install .[docs]
+  script:
+    - mkdocs build --site-dir site
+  artifacts:
+    paths:
+      - site
+
+lint:
+  image: $PYTHON_IMAGE
+  stage: test
+  before_script:
+    - pip install .[testing,vis]
+  script:
+    - ruff check .
+    - ruff format --check .
+    - mypy .
+
+pytest:
+  image: $PYTHON_IMAGE
+  stage: test
+  before_script:
+    - pip install .[testing,vis]
+    - export PY_IGNORE_IMPORTMISMATCH=1
+  script:
+    - pytest -m "not slow"
+
+pages:
+  image: $PYTHON_IMAGE
+  stage: deploy
+  script:
+    - mv site public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+
+wheel:
+  stage: deploy
+  image: $PYTHON_IMAGE
+  before_script:
+    - pip install twine
+  script:
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+  only:
+    - main

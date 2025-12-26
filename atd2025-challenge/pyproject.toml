@@ -1,0 +1,108 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atd2025"
+description = "Algorithms for Threat Detection 2025 challenge."
+version = "1.0.3"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = [
+    "kaleido",
+    "numpy>=1.24",
+    "pandas",
+    "plotly",
+    "tqdm",
+    "typer",
+    "typing-extensions>=4.6.3; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel",
+]
+testing = [
+    "ruff",
+    "hypothesis",
+    "mypy",
+    "pytest",
+    "pandas-stubs",
+    "types-tqdm",
+]
+docs = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+]
+all = [
+    "atd2025[dev]",
+    "atd2025[testing]",
+    "atd2025[docs]",
+]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+atd2025 = ["py.typed", "data/*.csv*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+exclude = [
+    "build",
+    "docs",
+    "envs",
+    "htmlcov",
+    "results",
+    "tests-reports",
+    "atd2025.egg-info",
+    "data",
+    "junk",
+    ".egg",
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".hypothesis",
+    ".ipynb_checkpoints",
+    ".__pycache__",
+]
+
+[tool.ruff.lint]
+select = ["F", "E", "I"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.pytest.ini_options]
+addopts = "-v --durations=0 --doctest-modules --ignore=tests/data -m \"not slow\""
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+testpaths = [
+    "tests",
+    "src/atd2025",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
+[tool.mypy]
+strict = true
+allow_redefinition = true
+show_error_codes = true
+warn_unused_ignores = false
+exclude = "build/.*"
+
+[project.scripts]
+aisshow = "atd2025.aisvis.show_tracks:cli_main"
+aisdata = "atd2025.data:main"

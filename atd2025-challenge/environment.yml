@@ -1,0 +1,9 @@
+name: atd2025
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python>=3.9
+  - pip
+  - pip:
+    - -e ".[all]"

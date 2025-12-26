@@ -1,0 +1,94 @@
+site_name: ATD2025
+site_description: Algorithms for Threat Detection 2025 challenge
+site_url: https://algorithms-for-threat-detection.gitlab.io/2025/atd2025
+repo_url: https://gitlab.com/algorithms-for-threat-detection/2025/atd2025
+
+theme:
+  name: material
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.footnote.tooltips
+    - content.tabs.link
+    - content.tooltips
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.preview
+    - navigation.instant.progress
+    - navigation.path
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - footnotes
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_root_heading: true
+            show_if_no_docstring: true
+            inherited_members: true
+            members_order: source
+            separate_signature: true
+            filters:
+            - '!^_'
+            merge_init_into_class: true
+            signature_crossrefs: true
+            show_submodules: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            show_source: true
+            show_category_heading: true
+            docstring_style: google
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installing Mamba: getting-started/dependencies.md
+    - Authenticate to Gitlab: getting-started/gitlab.md
+    - Creating your Development Environment: getting-started/environment.md
+  - About the Challenge:
+    - Problem Description: problem.md
+    - Data Description: data.md
+    - Evaluation and Metrics: metric.md
+    - Submitting Predictions: submission.md
+  - API Reference:
+    - Input/Output: api/io.md
+    - Points and Tracks: api/tracks.md
+    - Data Generation: api/data.md
+    - Metrics: api/metrics.md
+    - Baselines: api/baselines.md
+    - Plotting: api/plotting.md
+    - Constants: api/constants.md
+  - Tutorials:
+    - Making Predictions: cookbook/predictions.md
+    - Generating Data: cookbook/generating-data.md
+    - Evaluating Predictions: cookbook/evaluation.md
+  - FAQ: faq.md
